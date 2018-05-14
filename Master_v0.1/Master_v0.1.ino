@@ -26,7 +26,7 @@ void setup()
   pinMode(resetTempo, INPUT);
   
   Serial.begin(9600);
-  Wire.begin(); // Otvaranje i2c komunikacije A4,A5
+  Wire.begin(); // Otvaranje i2c komunikacije A4(SDA),A5(SCL)
 }
 
 void loop()
