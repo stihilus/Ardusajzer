@@ -1,3 +1,3 @@
 # ArduinoSynth
 
-![alt text](https://github.com/stihilus/ArduinoSynth/tree/master/img/ArduinoSynth01.jpg)
+[[https://github.com/stihilus/ArduinoSynth/tree/master/img/ArduinoSynth01.jpg|alt=octocat]]
