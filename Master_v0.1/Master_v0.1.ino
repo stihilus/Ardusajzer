@@ -3,8 +3,6 @@
 //            MASTER
 //------------------
 
-Test GitHub
-
 const int potButton = 2; 
 // Potenciometer Button - Pin D2
 // Ako je pritisnuto dugme potButton propusta se vrednost potenciometra
