@@ -1,18 +1,18 @@
-//Arduino Synth v0.1
-//------------------
-//            MASTER
-//------------------
+                                                    //Arduino Synth v0.1
+                                                    //------------------
+                                                    //            MASTER
+                                                    //------------------
 
-const int potButton = 2; 
-// Potenciometer Button - Pin D2
-// Ako je pritisnuto dugme potButton propusta se vrednost potenciometra
-const int tempoMinus = 3; // tempoMinus usporava tempo - Pin D3
-const int tempoPlus = 4; // tempoPlus ubrzava tempo - Pin D4
-const int resetTempo = 5; // retetTempo resetuje na 500ms - Pin D3
-int tempo = 100; // Start Tempo in ms
+const int potButton = 2;                            // Potenciometer Button - Pin D2
+                                                    // Ako je pritisnuto dugme potButton 
+                                                    // propusta se vrednost potenciometra
+const int tempoMinus = 3;                           // tempoMinus usporava tempo - Pin D3
+const int tempoPlus = 4;                            // tempoPlus ubrzava tempo - Pin D4
+const int resetTempo = 5;                           // retetTempo resetuje na 500ms - Pin D3
+int tempo = 100;                                    // Start Tempo in ms
 
 
-#include <Wire.h> //inkludovanje Wire.h biblioteke
+#include <Wire.h>                                   //inkludovanje Wire.h biblioteke
 
 void setup()
 {
@@ -24,18 +24,19 @@ void setup()
   pinMode(resetTempo, INPUT);
   
   Serial.begin(9600);
-  Wire.begin(); // Otvaranje i2c komunikacije A4(SDA),A5(SCL)
+  Wire.begin();                                     // Otvaranje i2c komunikacije A4(SDA),A5(SCL)
 }
 
 void loop()
 {
-  digitalWrite(potButton, LOW); // za svaki slucaj 
+  digitalWrite(potButton, LOW);                     // za svaki slucaj 
 
-  Wire.beginTransmission(5); // pocetak i2c komunikacija preko 5 kanala
-  Wire.write('H'); // Slanje H karaktera SLAVE arduinu
-  Wire.endTransmission(); // Zatravanje komunikacije
+  Wire.beginTransmission(5);                        // pocetak i2c komunikacija preko 5 kanala
+  Wire.write('H');                                  // Slanje H karaktera SLAVE arduinu
+  Wire.endTransmission();                           // Zatravanje komunikacije
 
-  // Provera da li je potButton HIGH ako jeste propusta vrednost A3 potenciometra
+                                                    // Provera da li je potButton HIGH ako jeste 
+                                                    // propusta vrednost A3 potenciometra
   if(digitalRead(potButton) == HIGH)
   {
     potOcitavanje();
@@ -60,12 +61,12 @@ void loop()
   } 
 
   
-  delay(tempo); // DELAY u zavistnosti od tempa
+  delay(tempo);                                     // DELAY u zavistnosti od tempa
   Serial.println(tempo);
 }
 
 
-// FUNKCIJA za ocitavanje POTENCIOMETRA na A3
+                                                    // FUNKCIJA za ocitavanje POTENCIOMETRA na A3
 int potOcitavanje()
 {
   tempo = analogRead(A3);
