@@ -1,18 +1,22 @@
                                                     //Arduino Synth v0.1
                                                     //------------------
-                                                    //            MASTER
+                                                    //            MELODY
                                                     //------------------
 
 
 #include <Wire.h>                                   // inkludovanje Wire.h biblioteke
+const int ledPin = 13;
+int ledLife = 100;
+int tonePin = 8;
+int toneFrequency = 200;
+int toneDuration = 500;
 
 void setup()
 {
   Wire.begin(5);                                    // otvaranje/slusanje i2c komunikacije preko 5 kanala
   Wire.onReceive(receiveEvent);
-  
-  pinMode(13, OUTPUT);                              // LED kao indikator TEMPA - Pin D13
-  digitalWrite(13, LOW);
+  pinMode(ledPin, OUTPUT);                              // LED kao indikator TEMPA - Pin D13
+  digitalWrite(ledPin, LOW);
 }
 
 void loop()
@@ -25,13 +29,12 @@ void receiveEvent(int howMany)                      //??? howMany
   {
    char c = Wire.read();                            //Promenljivoj C char se dodaljuje vrednosta sa i2c
    
-   if(c == 'H')                                     // Ako je C jednako H kojeg prima sa MASTER-a onda:
+   if(c == 'A')                                  // Ako je C jednako stringu kojeg prima sa MASTER-a onda:
    {
-     digitalWrite(13, HIGH);                        // Pali se LED indikator
-     delay(2000);                                   //???
-     tone(8, 200, 500);                             // Pusta se ton "tone(pin, frequency, duration)"
-     
-     digitalWrite(13, LOW);                         // Gasi se LED indikator
+     digitalWrite(ledPin, HIGH);                    // Pali se LED indikator
+     delay(ledLife);                                // Trajanje sveljenja diode
+     tone(tonePin, toneFrequency, toneDuration);    // Pusta se ton "tone(pin, frequency, duration)"
+     digitalWrite(ledPin, LOW);                     // Gasi se LED indikator
    }
   }
 }
