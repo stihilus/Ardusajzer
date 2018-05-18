@@ -5,14 +5,14 @@
 
 const int potButton = 2;                            // Potenciometer Button - Pin D2
                                                     // Ako je pritisnuto dugme potButton 
-                                                    // propusta se vrednost potenciometra
+                                                    // ocitava se vrednost potenciometra
 const int tempoMinus = 3;                           // tempoMinus usporava tempo - Pin D3
 const int tempoPlus = 4;                            // tempoPlus ubrzava tempo - Pin D4
 const int tempoReset = 5;                           // retetTempo resetuje na 500ms - Pin D3
-int tempo = 100;                                    // Start Tempo in ms
+int tempo = 250;                                    // Start Tempo u ms
+int brojac = 1;
 
-
-#include <Wire.h>                                   //inkludovanje Wire.h biblioteke
+#include <Wire.h>                                   //ukljucivanje biblioteke Wire.h
 
 void setup()
 {
@@ -28,14 +28,43 @@ void setup()
 void loop()
 {
   Wire.beginTransmission(5);                        // pocetak i2c komunikacija preko 5 kanala
-  Wire.write('A');                               // Slanje stringa SLAVE arduinu
-  Wire.endTransmission();                           // Zatravanje komunikacije
+  
+  if(brojac == 1)
+  {
+    Wire.write('1');                                // slanje karaktera slave arduinu
+  }
+  else if(brojac == 2)
+  {
+    Wire.write('1');
+    Wire.write('2');
+  }
+  else if(brojac == 3)
+  {
+    Wire.write('1');
+    Wire.write('3');
+  }
+  else if(brojac == 4)
+  {
+    Wire.write('1');
+    Wire.write('4');
+  }
+
+  if(brojac<=3)
+  {
+    brojac = brojac + 1;
+  }
+  else
+  {
+    brojac = 1;
+  }
+    
+  Wire.endTransmission();                           // kraj komunikacije
 
                                                     // Provera da li je potButton HIGH ako jeste 
-                                                    // propusta vrednost A3 potenciometra
+                                                    // ocitava vrednost potenciometra povezanog na A3
   if(digitalRead(potButton) == HIGH)
   {
-    tempo = analogRead(A3);
+    tempo = map(analogRead(A3),0,1023,250,750);
   } 
 
   // TEMPO MINUS
@@ -55,7 +84,6 @@ void loop()
   {
     tempo = 500;
   } 
-
   
   delay(tempo);                                     // DELAY u zavistnosti od tempa
   Serial.println(tempo);
