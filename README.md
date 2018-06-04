@@ -1,16 +1,3 @@
-# ArduSajzer
-![img-d8aa46f2ecbc8222ffa3e522d6941178-v](https://user-images.githubusercontent.com/20823082/40268385-a12f6edc-5b6c-11e8-82f4-4bc83951e25e.jpg)
+# Ardusajzer
+<img width="912" alt="screen shot 2018-06-04 at 8 38 04 pm" src="https://user-images.githubusercontent.com/20823082/40935104-5482cbd8-6837-11e8-821f-326fabf58801.png">
 First version of Master and Melody!
-
-
-#Master/Clock
-
-Tempo potenciometar 80 - 240BPM
-Salje 4 pinga:
-0000
-0-0-
---0-
----0
-
-#Melody
-Bira uzmedju jednog od cetiri pinga i pokrece sekvencu od 8 koraka.
