@@ -1,25 +1,14 @@
-#include <Wire.h> // Biblioteka za i2c komunikaciju
-#include <LCD5110_Graph.h> // Biblioteka za LCD
+#include <Wire.h>
+#include <LCD5110_Graph.h>
 
-LCD5110 myGLCD(8,9,10,12,11); 
+LCD5110 myGLCD(8,9,10,12,11);
+extern unsigned char SmallFont[];
 
-// LCD PIN------Arduino PIN
-// 1 RST        D12
-// 2 CE         D11
-// 3 DC         D10
-// 4 DIN        D9
-// 5 CLK        D8
-// 6 VCC        5V - 3.3V
-// 7 LIGHT      GND
-// 8 GND        GND
-
-extern unsigned char SmallFont[]; // Odabir fonta
-
-const int pot = 2; // Dugme koje propusta vrednost potenciometra
-const int ledPin = 13; // signalni LED / Tempo LED
-const int tempoMinus = 3; // Usporavanje tempa
-const int tempoPlus = 4; // Ubrzavanje tempa
-const int tempoReset = 5; // Resetovanje tempa
+const int pot = 2;
+const int ledPin = 13;
+const int tempoMinus = 3;
+const int tempoPlus = 4;
+const int tempoReset = 5;
 int tempo = 140;
 int brojac = 1;
 int trajanjeLed = 100;
@@ -28,10 +17,10 @@ unsigned long trenutak = 0;
 
 void setup()
 {
-  Wire.begin(); // Otvanje i2c veze 
+  Wire.begin();
   
-  myGLCD.InitLCD(); // Aktiviranje LCD
-  myGLCD.setFont(SmallFont); // Setovanje fonta
+  myGLCD.InitLCD();
+  myGLCD.setFont(SmallFont);
   
   Serial.begin(9600);
   
@@ -43,17 +32,17 @@ void setup()
   pinMode(ledPin,OUTPUT);
 }
 
-void loop() // Slanje 1 2 3 4 "char"-a sa mastera
+void loop()
 {
   
-  Wire.beginTransmission(5); // Salje samo 1
+  Wire.beginTransmission(5);
   if(brojac == 1)
   {
     Wire.write('1');
     Serial.println("Poslato 1.");
     treptanje();
   }
-  else if(brojac == 2) // Salje i 1 i 2
+  else if(brojac == 2)
   {
     Wire.write('1');
     Wire.write('2');
@@ -75,9 +64,9 @@ void loop() // Slanje 1 2 3 4 "char"-a sa mastera
     treptanje();
   }
   
-  Wire.endTransmission(); // Prekid i2c komunikacije
+  Wire.endTransmission();
   
-  if(brojac <= 3) // Brojac 
+  if(brojac <= 3)
   {
     brojac = brojac + 1;
   }
@@ -87,21 +76,20 @@ void loop() // Slanje 1 2 3 4 "char"-a sa mastera
   }
   
   Serial.print("Brojac je: "); Serial.println(brojac);
-
-  // Stampanje ardusajzer logo-a na LCD-u
+  
   myGLCD.clrScr();
   myGLCD.print("ARDUSAJZER", 12, 15);
   myGLCD.print("RULES!", 25, 30);
   myGLCD.update();
   
-  if(digitalRead(pot) == LOW) // Ako je pot dugme pritisnuto propustaje vrednost i setuj tempo
+  if(digitalRead(pot) == LOW)
   {
     tempo = map(analogRead(A3),0,1023,80,240);
     myGLCD.clrScr();
     myGLCD.print(String(tempo), 32, 20);
     myGLCD.update();
   }
-  else if(digitalRead(tempoMinus) == LOW) // ako je minus dugme pritisnuto skida tempo
+  else if(digitalRead(tempoMinus) == LOW)
   {
     if(tempo>=85)
     {
@@ -145,19 +133,20 @@ void loop() // Slanje 1 2 3 4 "char"-a sa mastera
     myGLCD.update();
   } 
   
-  delay(60000/tempo); // TEMPO
+  delay(60000/tempo);
   Serial.print(tempo); Serial.println(" BMP");
 }
 
-void treptanje() // Indikator tempa LED
+void treptanje()
 {
-  if((millis() - trenutak)>=trajanjeLed)
+  unsigned long trenutno = millis();
+  
+  if((trenutno - trenutak)>=trajanjeLed)
   {
-    trenutak = millis();
+    trenutak = trenutno;
     if(stanjeLed==LOW)
   {
     stanjeLed = HIGH;
-
   }
   else
   {
